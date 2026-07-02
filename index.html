@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>N Detailing Studio — Premium Car Detailing | Lajkovac</title>
+  <meta name="description" content="N Detailing Studio Lajkovac — premium auto detailing. Keramička zaštita stakala, poliranje laka, dubinsko čišćenje enterijera. Rezervišite termin online.">
+  <meta name="keywords" content="car detailing lajkovac, keramička zaštita stakala, poliranje laka, auto detailing, n detailing studio">
+  <meta property="og:title" content="N Detailing Studio — Premium Car Detailing">
+  <meta property="og:description" content="Vraćamo originalnu lepotu vašeg vozila. Rezervišite termin online.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/hero.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#070707',
+            coal: '#0d0d0f',
+            slate2: '#141417',
+            gold: '#c5a96d',
+            goldlight: '#e3cfa4',
+            golddark: '#9a7f45'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['"Playfair Display"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-ink text-neutral-200 font-sans antialiased overflow-x-hidden">
+
+  <!-- ═══════════ PRELOADER ═══════════ -->
+  <div id="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-logo font-display">N <span>Detailing</span></div>
+      <div class="preloader-bar"><span id="preloaderBar"></span></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ HEADER ═══════════ -->
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <nav class="max-w-7xl mx-auto px-5 lg:px-8 flex items-center justify-between h-20">
+      <a href="#hero" class="nav-link font-display text-2xl tracking-wide text-white">
+        N <span class="text-gold italic">Detailing</span> <span class="text-xs tracking-[0.3em] uppercase text-neutral-400 font-sans align-middle">Studio</span>
+      </a>
+      <ul class="hidden lg:flex items-center gap-8 text-sm font-medium tracking-wide">
+        <li><a href="#usluge" class="nav-link nav-item">Usluge</a></li>
+        <li><a href="#paketi" class="nav-link nav-item">Paketi</a></li>
+        <li><a href="#galerija" class="nav-link nav-item">Galerija</a></li>
+        <li><a href="#o-nama" class="nav-link nav-item">O nama</a></li>
+        <li><a href="#recenzije" class="nav-link nav-item">Recenzije</a></li>
+        <li><a href="#kontakt" class="nav-link nav-item">Kontakt</a></li>
+      </ul>
+      <div class="flex items-center gap-4">
+        <a href="#rezervacija" class="nav-link btn-gold hidden sm:inline-flex text-sm">Rezerviši termin</a>
+        <button id="burger" class="lg:hidden relative w-10 h-10 grid place-items-center" aria-label="Meni">
+          <span class="burger-line"></span>
+          <span class="burger-line"></span>
+          <span class="burger-line"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="fixed inset-0 z-40 lg:hidden">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-md" id="mobileMenuBg"></div>
+    <nav class="relative h-full flex flex-col items-center justify-center gap-7 text-2xl font-display">
+      <a href="#usluge" class="nav-link mobile-link">Usluge</a>
+      <a href="#paketi" class="nav-link mobile-link">Paketi</a>
+      <a href="#galerija" class="nav-link mobile-link">Galerija</a>
+      <a href="#o-nama" class="nav-link mobile-link">O nama</a>
+      <a href="#recenzije" class="nav-link mobile-link">Recenzije</a>
+      <a href="#kontakt" class="nav-link mobile-link">Kontakt</a>
+      <a href="#rezervacija" class="nav-link btn-gold mt-4 text-base font-sans">Rezerviši termin</a>
+    </nav>
+  </div>
+
+  <main>
+    <!-- ═══════════ HERO ═══════════ -->
+    <section id="hero" class="relative min-h-screen flex items-center overflow-hidden">
+      <div class="absolute inset-0" id="heroParallax">
+        <img src="images/gallery5.jpg" alt="Premium detailing automobila u N Detailing studiju" class="w-full h-[115%] object-cover object-top" fetchpriority="high">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-ink"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
+      </div>
+      <canvas id="particles" class="absolute inset-0 pointer-events-none"></canvas>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-5 lg:px-8 pt-32 pb-20 w-full">
+        <p class="hero-el text-gold tracking-[0.35em] uppercase text-xs sm:text-sm mb-6 font-semibold">Premium Car Detailing · Lajkovac</p>
+        <h1 class="hero-el font-display text-5xl sm:text-6xl lg:text-8xl leading-[1.05] text-white max-w-4xl">
+          Vaš automobil zaslužuje <em class="text-gold italic">savršenstvo</em>
+        </h1>
+        <p class="hero-el mt-7 max-w-xl text-neutral-300 text-lg leading-relaxed">
+          Keramička zaštita stakala, višefazno poliranje laka i dubinska nega enterijera —
+          detailing na nivou na kojem vaše vozilo izgleda bolje nego u salonu.
+        </p>
+        <div class="hero-el mt-10 flex flex-wrap gap-4">
+          <a href="#rezervacija" class="nav-link btn-gold text-base">Rezerviši detailing</a>
+          <a href="#paketi" class="nav-link btn-ghost text-base">Pogledaj pakete</a>
+        </div>
+
+        <div class="hero-el mt-20 grid grid-cols-2 sm:grid-cols-4 gap-8 max-w-3xl">
+          <div class="stat">
+            <span class="stat-num font-display text-4xl lg:text-5xl text-white" data-count="50">0</span><span class="text-gold font-display text-4xl lg:text-5xl">+</span>
+            <p class="stat-label">Zadovoljnih klijenata</p>
+          </div>
+          <div class="stat">
+            <span class="stat-num font-display text-4xl lg:text-5xl text-white" data-count="2">0</span>
+            <p class="stat-label">Godine iskustva</p>
+          </div>
+          <div class="stat">
+            <span class="stat-num font-display text-4xl lg:text-5xl text-white" data-count="100">0</span><span class="text-gold font-display text-4xl lg:text-5xl">+</span>
+            <p class="stat-label">Detailing tretmana</p>
+          </div>
+          <div class="stat">
+            <span class="stat-num font-display text-4xl lg:text-5xl text-white" data-count="5">0</span><span class="text-gold font-display text-4xl lg:text-5xl">.0</span>
+            <p class="stat-label">Prosečna ocena</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 scroll-hint">
+        <span class="block w-px h-14 bg-gradient-to-b from-transparent via-gold to-transparent"></span>
+      </div>
+    </section>
+
+    <!-- ═══════════ USLUGE ═══════════ -->
+    <section id="usluge" class="section relative py-28">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="section-head">
+          <p class="eyebrow">Šta radimo</p>
+          <h2 class="font-display text-4xl lg:text-6xl text-white">Naše <em class="text-gold italic">usluge</em></h2>
+        </div>
+
+        <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <article class="service-card tilt" data-reveal>
+            <div class="service-icon">✦</div>
+            <h3 class="font-display text-2xl text-white mb-3">Eksterijer detailing</h3>
+            <p class="text-neutral-400 leading-relaxed">Beskontaktno i kontaktno pranje, dekontaminacija laka, pranje felni i pneumatika, sušenje mikrofiber peškirima i dressing pneumatika.</p>
+          </article>
+          <article class="service-card tilt" data-reveal>
+            <div class="service-icon">✧</div>
+            <h3 class="font-display text-2xl text-white mb-3">Enterijer detailing</h3>
+            <p class="text-neutral-400 leading-relaxed">Dubinsko usisavanje, Tornador izduvavanje, hemijsko čišćenje sedišta, dezinfekcija i ozoniranje — enterijer kao iz salona.</p>
+          </article>
+          <article class="service-card tilt" data-reveal>
+            <div class="service-icon">◈</div>
+            <h3 class="font-display text-2xl text-white mb-3">Paint Correction</h3>
+            <p class="text-neutral-400 leading-relaxed">Jednofazno i višefazno mašinsko poliranje laka. Uklanjamo swirl tragove, ogrebotine i oksidaciju — vraćamo dubinu i sjaj boje.</p>
+          </article>
+          <article class="service-card tilt" data-reveal>
+            <div class="service-icon">◆</div>
+            <h3 class="font-display text-2xl text-white mb-3">Keramička zaštita stakala</h3>
+            <p class="text-neutral-400 leading-relaxed">Profesionalna keramička prevlaka za sva stakla. Hidrofobni efekat — voda klizi sa šoferke, bolja vidljivost i bezbednija vožnja po kiši.</p>
+          </article>
+          <article class="service-card tilt" data-reveal>
+            <div class="service-icon">❖</div>
+            <h3 class="font-display text-2xl text-white mb-3">Tornador tretman</h3>
+            <p class="text-neutral-400 leading-relaxed">Izduvavanje prašine i nečistoća iz teško dostupnih mesta — ventilacije, šavova, lajsni i pregrada — komprimovanim vazduhom.</p>
+          </article>
+          <article class="service-card tilt" data-reveal>
+            <div class="service-icon">✵</div>
+            <h3 class="font-display text-2xl text-white mb-3">Restauracija kože</h3>
+            <p class="text-neutral-400 leading-relaxed">Dubinsko čišćenje, ishrana i zaštita kožnih sedišta kondicionerom. Vraćamo mekoću i boju izbledeloj i isušenoj koži.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ PAKETI ═══════════ -->
+    <section id="paketi" class="section relative py-28 bg-coal">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="section-head">
+          <p class="eyebrow">Transparentne cene</p>
+          <h2 class="font-display text-4xl lg:text-6xl text-white">Paketi <em class="text-gold italic">usluga</em></h2>
+          <p class="mt-5 text-neutral-400 max-w-xl mx-auto">Fiksne cene, bez skrivenih troškova. Za nestandardna vozila kontaktirajte nas za individualnu ponudu.</p>
+        </div>
+
+        <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+          <article class="price-card tilt" data-reveal>
+            <p class="price-tier">Basic</p>
+            <h3 class="font-display text-2xl text-white">Basic Detailing</h3>
+            <p class="text-sm text-neutral-500 mt-1 mb-6">Osnovno osvežavanje spolja i iznutra</p>
+            <p class="price"><span>10</span>€</p>
+            <ul class="price-list">
+              <li>Beskontaktno i kontaktno pranje</li>
+              <li>Pranje felni i pneumatika</li>
+              <li>Sušenje mikrofiber peškirima</li>
+              <li>Dressing pneumatika</li>
+              <li>Usisavanje enterijera</li>
+              <li>Čišćenje stakala</li>
+              <li>Plastične površine + pragovi</li>
+            </ul>
+            <a href="#rezervacija" class="nav-link btn-ghost w-full mt-8 booking-cta" data-package="Basic (10€)">Rezerviši</a>
+          </article>
+
+          <article class="price-card tilt" data-reveal>
+            <p class="price-tier">Premium</p>
+            <h3 class="font-display text-2xl text-white">Premium Detailing</h3>
+            <p class="text-sm text-neutral-500 mt-1 mb-6">Kompletno čišćenje + dubinski tretman</p>
+            <p class="price"><span>80</span>€</p>
+            <ul class="price-list">
+              <li>Sve iz Basic paketa</li>
+              <li>Tornador izduvavanje</li>
+              <li>Dezinfekcija enterijera</li>
+              <li>Čišćenje četkicama</li>
+              <li>Hem. čišćenje plastike</li>
+              <li>Zaštita eksterijera voskom</li>
+              <li>Čišćenje motora</li>
+            </ul>
+            <a href="#rezervacija" class="nav-link btn-ghost w-full mt-8 booking-cta" data-package="Premium (80€)">Rezerviši</a>
+          </article>
+
+          <article class="price-card price-card--featured tilt" data-reveal>
+            <p class="featured-badge">Najpopularniji</p>
+            <p class="price-tier">Gold</p>
+            <h3 class="font-display text-2xl text-white">Gold Detailing</h3>
+            <p class="text-sm text-neutral-500 mt-1 mb-6">Poliranje laka + hem. sedišta + ozoniranje</p>
+            <p class="price"><span>120</span>€</p>
+            <ul class="price-list">
+              <li>Sve iz Premium paketa</li>
+              <li>Clay bar dekontaminacija</li>
+              <li>Jednofazno poliranje laka</li>
+              <li>Hem. čišćenje sedišta</li>
+              <li>Ozoniranje enterijera</li>
+              <li>Nano zaštita stakla</li>
+              <li>Poliranje svetala</li>
+            </ul>
+            <a href="#rezervacija" class="nav-link btn-gold w-full mt-8 booking-cta" data-package="Gold (120€)">Rezerviši</a>
+          </article>
+
+          <article class="price-card tilt" data-reveal>
+            <p class="price-tier">♛ Diamond</p>
+            <h3 class="font-display text-2xl text-white">Diamond Paket</h3>
+            <p class="text-sm text-neutral-500 mt-1 mb-6">Potpuna transformacija vašeg automobila</p>
+            <p class="price"><span>180</span>€</p>
+            <ul class="price-list">
+              <li>Sve iz Gold paketa</li>
+              <li>Višefazno poliranje laka</li>
+              <li>Keramička zaštita stakala</li>
+              <li>Restauracija kožnih sedišta</li>
+              <li>Skidanje sedišta za čišćenje</li>
+              <li>Antibakterijski tretman</li>
+              <li>Prioritetni termin + foto</li>
+            </ul>
+            <a href="#rezervacija" class="nav-link btn-ghost w-full mt-8 booking-cta" data-package="Diamond (180€)">Rezerviši</a>
+          </article>
+        </div>
+
+        <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4" data-reveal>
+          <p class="addon"><span>Tornador izduvavanje</span><b>500 din</b></p>
+          <p class="addon"><span>Uklanjanje dlaka ljubimaca</span><b>1.000 din</b></p>
+          <p class="addon"><span>Ozoniranje enterijera</span><b>2.000 din</b></p>
+          <p class="addon"><span>Hem. čišćenje sedišta</span><b>od 3.000 din</b></p>
+          <p class="addon"><span>Keramička zaštita za stakla</span><b>4.000 din</b></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ GALERIJA ═══════════ -->
+    <section id="galerija" class="section relative py-28">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="section-head">
+          <p class="eyebrow">Naš rad govori za nas</p>
+          <h2 class="font-display text-4xl lg:text-6xl text-white">Pre <em class="text-gold italic">&amp;</em> posle</h2>
+        </div>
+
+        <!-- Before/After slider -->
+        <div class="mt-16 grid lg:grid-cols-2 gap-6" data-reveal>
+          <div class="ba-slider" data-before="images/g05.jpg" data-after="images/gallery3.jpg">
+            <img class="ba-after" src="images/gallery3.jpg" alt="Sedište posle hemijskog čišćenja">
+            <div class="ba-before-wrap"><img class="ba-before" src="images/g05.jpg" alt="Sedište pre hemijskog čišćenja"></div>
+            <div class="ba-handle"><span></span></div>
+            <span class="ba-tag ba-tag--l">Pre</span><span class="ba-tag ba-tag--r">Posle</span>
+          </div>
+          <div class="ba-slider" data-before="images/g14.jpg" data-after="images/gallery4.jpg">
+            <img class="ba-after" src="images/gallery4.jpg" alt="Vrata i prag posle detailinga">
+            <div class="ba-before-wrap"><img class="ba-before" src="images/g14.jpg" alt="Vrata i prag pre detailinga"></div>
+            <div class="ba-handle"><span></span></div>
+            <span class="ba-tag ba-tag--l">Pre</span><span class="ba-tag ba-tag--r">Posle</span>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="mt-16 flex flex-wrap justify-center gap-3" data-reveal>
+          <button class="filter-btn is-active" data-filter="all">Sve</button>
+          <button class="filter-btn" data-filter="enterijer">Enterijer</button>
+          <button class="filter-btn" data-filter="eksterijer">Eksterijer</button>
+          <button class="filter-btn" data-filter="detalji">Detalji</button>
+        </div>
+
+        <div id="galleryGrid" class="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+
+        <div class="text-center mt-10" data-reveal>
+          <button id="loadMore" class="btn-ghost">Prikaži još</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/95 p-4">
+      <button id="lbClose" class="absolute top-5 right-6 text-4xl text-neutral-400 hover:text-gold transition" aria-label="Zatvori">×</button>
+      <button id="lbPrev" class="lb-nav left-3" aria-label="Prethodna">‹</button>
+      <img id="lbImg" src="" alt="Uvećana fotografija iz galerije" class="max-h-[88vh] max-w-full rounded-lg shadow-2xl">
+      <button id="lbNext" class="lb-nav right-3" aria-label="Sledeća">›</button>
+    </div>
+
+    <!-- ═══════════ O NAMA ═══════════ -->
+    <section id="o-nama" class="section relative py-28 bg-coal overflow-hidden">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8 grid lg:grid-cols-2 gap-14 items-center">
+        <div class="relative" data-reveal>
+          <div class="about-frame">
+            <img src="images/gallery2.jpg" alt="N Detailing Studio tim na poslu" class="rounded-xl w-full object-cover aspect-[4/5]" loading="lazy">
+          </div>
+          <div class="about-card">
+            <p class="font-display text-5xl text-gold">2+</p>
+            <p class="text-sm text-neutral-300 mt-1">godine posvećenosti<br>savršenstvu</p>
+          </div>
+        </div>
+        <div data-reveal>
+          <p class="eyebrow text-left">O nama</p>
+          <h2 class="font-display text-4xl lg:text-5xl text-white leading-tight">Strast prema detaljima, <em class="text-gold italic">bez kompromisa</em></h2>
+          <p class="mt-6 text-neutral-400 leading-relaxed">
+            N Detailing Studio je premium studio u Lajkovcu specijalizovan za kompletnu negu vozila.
+            Radimo isključivo sa profesionalnom hemijom i opremom najvišeg ranga, a svaki automobil
+            tretiramo kao da je naš.
+          </p>
+          <p class="mt-4 text-neutral-400 leading-relaxed">
+            Od svakodnevnih gradskih vozila do kolekcionarskih primeraka — naš proces je uvek isti:
+            detaljan pregled, precizna priprema, tretman bez žurbe i isporuka koja oduševljava.
+          </p>
+          <ul class="mt-8 space-y-4">
+            <li class="feature"><b>01</b><div><h4>Pregled vozila</h4><p>Detaljna procena stanja laka i enterijera pre svakog tretmana.</p></div></li>
+            <li class="feature"><b>02</b><div><h4>Priprema</h4><p>Dekontaminacija i maskiranje osetljivih delova vozila.</p></div></li>
+            <li class="feature"><b>03</b><div><h4>Tretman</h4><p>Izvođenje usluge profesionalnom opremom, korak po korak.</p></div></li>
+            <li class="feature"><b>04</b><div><h4>Isporuka</h4><p>Finalna kontrola kvaliteta i primopredaja sa preporukama za održavanje.</p></div></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ RECENZIJE ═══════════ -->
+    <section id="recenzije" class="section relative py-28">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="section-head">
+          <p class="eyebrow">Šta kažu klijenti</p>
+          <h2 class="font-display text-4xl lg:text-6xl text-white">Recenzije <em class="text-gold italic">klijenata</em></h2>
+        </div>
+
+        <div class="mt-16 relative" data-reveal>
+          <div id="reviewTrack" class="review-track"></div>
+          <div class="flex items-center justify-center gap-4 mt-8">
+            <button id="revPrev" class="carousel-btn" aria-label="Prethodne recenzije">‹</button>
+            <div id="revDots" class="flex gap-2"></div>
+            <button id="revNext" class="carousel-btn" aria-label="Sledeće recenzije">›</button>
+          </div>
+        </div>
+
+        <!-- Review form -->
+        <div class="mt-20 max-w-2xl mx-auto" data-reveal>
+          <div class="panel">
+            <h3 class="font-display text-3xl text-white mb-2">Ostavite recenziju</h3>
+            <p class="text-neutral-500 text-sm mb-8">Vaše mišljenje nam znači — podelite iskustvo sa drugima.</p>
+            <form id="reviewForm" class="space-y-5" novalidate>
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="lbl" for="revName">Ime i prezime *</label>
+                  <input id="revName" type="text" class="inp" required placeholder="Marko Marković">
+                </div>
+                <div>
+                  <label class="lbl">Ocena *</label>
+                  <div id="starPicker" class="star-picker" role="radiogroup" aria-label="Ocena od 1 do 5">
+                    <button type="button" data-star="1" aria-label="1 zvezdica">★</button>
+                    <button type="button" data-star="2" aria-label="2 zvezdice">★</button>
+                    <button type="button" data-star="3" aria-label="3 zvezdice">★</button>
+                    <button type="button" data-star="4" aria-label="4 zvezdice">★</button>
+                    <button type="button" data-star="5" aria-label="5 zvezdica">★</button>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="lbl" for="revText">Komentar *</label>
+                <textarea id="revText" rows="4" class="inp" required placeholder="Kako je prošlo vaše iskustvo sa N Detailing timom?"></textarea>
+              </div>
+              <div>
+                <label class="lbl" for="revPhoto">Fotografija (opciono)</label>
+                <input id="revPhoto" type="file" accept="image/*" class="inp inp-file">
+              </div>
+              <button type="submit" class="btn-gold w-full">Objavi recenziju</button>
+              <p id="reviewMsg" class="hidden text-center text-sm text-gold"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ REZERVACIJA ═══════════ -->
+    <section id="rezervacija" class="section relative py-28 bg-coal">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="section-head">
+          <p class="eyebrow">Online zakazivanje</p>
+          <h2 class="font-display text-4xl lg:text-6xl text-white">Rezerviši <em class="text-gold italic">termin</em></h2>
+          <p class="mt-5 text-neutral-400 max-w-xl mx-auto">Izaberite uslugu, datum i vreme — potvrdu šaljemo u roku od sat vremena.</p>
+        </div>
+
+        <form id="bookingForm" class="mt-16 grid lg:grid-cols-5 gap-6" novalidate>
+          <!-- Step 1: usluga -->
+          <div class="panel lg:col-span-2" data-reveal>
+            <p class="step-label"><b>1</b> Usluga</p>
+            <div class="space-y-3 mt-5" id="servicePicker">
+              <label class="svc"><input type="radio" name="bkService" value="Basic (10€)"><span><b>Basic Detailing</b><i>Osnovno osvežavanje</i></span><em>10€</em></label>
+              <label class="svc"><input type="radio" name="bkService" value="Premium (80€)"><span><b>Premium Detailing</b><i>Kompletno čišćenje + dubinski tretman</i></span><em>80€</em></label>
+              <label class="svc"><input type="radio" name="bkService" value="Gold (120€)" checked><span><b>Gold Detailing</b><i>Poliranje + hem. sedišta + ozoniranje</i></span><em>120€</em></label>
+              <label class="svc"><input type="radio" name="bkService" value="Diamond (180€)"><span><b>Diamond Paket</b><i>Potpuna transformacija</i></span><em>180€</em></label>
+            </div>
+
+            <p class="step-label mt-9"><b>3</b> Vaši podaci</p>
+            <div class="space-y-4 mt-5">
+              <input id="bkName" type="text" class="inp" placeholder="Ime i prezime *" required>
+              <input id="bkPhone" type="tel" class="inp" placeholder="Telefon *" required>
+              <input id="bkEmail" type="email" class="inp" placeholder="Email adresa">
+              <div class="grid grid-cols-2 gap-4">
+                <input id="bkCar" type="text" class="inp" placeholder="Marka i model *" required>
+                <select id="bkSegment" class="inp">
+                  <option value="">Segment vozila</option>
+                  <option>A segment (mini)</option>
+                  <option>B segment (kompakt)</option>
+                  <option>C segment (srednja klasa)</option>
+                  <option>D segment (SUV/Van)</option>
+                </select>
+              </div>
+              <textarea id="bkNote" rows="2" class="inp" placeholder="Napomena (opciono)"></textarea>
+            </div>
+          </div>
+
+          <!-- Step 2: kalendar -->
+          <div class="panel lg:col-span-3" data-reveal>
+            <p class="step-label"><b>2</b> Datum i vreme</p>
+            <div class="grid md:grid-cols-2 gap-8 mt-5">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <button type="button" id="calPrev" class="carousel-btn" aria-label="Prethodni mesec">‹</button>
+                  <p id="calTitle" class="font-display text-xl text-white"></p>
+                  <button type="button" id="calNext" class="carousel-btn" aria-label="Sledeći mesec">›</button>
+                </div>
+                <div class="cal-grid cal-head">
+                  <span>Pon</span><span>Uto</span><span>Sre</span><span>Čet</span><span>Pet</span><span>Sub</span><span>Ned</span>
+                </div>
+                <div id="calDays" class="cal-grid"></div>
+              </div>
+              <div>
+                <p class="text-sm text-neutral-400 mb-4">Slobodni termini za <b id="slotDate" class="text-gold">—</b></p>
+                <div id="timeSlots" class="grid grid-cols-3 gap-2.5">
+                  <p class="col-span-3 text-neutral-600 text-sm">Prvo izaberite datum u kalendaru.</p>
+                </div>
+                <div class="booking-summary mt-8" id="bkSummary">
+                  <p class="text-xs uppercase tracking-widest text-neutral-500 mb-3">Vaša rezervacija</p>
+                  <p id="sumService" class="sum-line">Gold Detailing — 120€</p>
+                  <p id="sumWhen" class="sum-line text-neutral-500">Datum i vreme nisu izabrani</p>
+                </div>
+                <button type="submit" class="btn-gold w-full mt-6">Potvrdi rezervaciju</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Booking confirmation modal -->
+    <div id="bkModal" class="fixed inset-0 z-[80] hidden items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black/85 backdrop-blur-sm" id="bkModalBg"></div>
+      <div class="relative panel max-w-md w-full text-center modal-pop">
+        <div class="modal-check">✓</div>
+        <h3 class="font-display text-3xl text-white mt-5">Rezervacija primljena!</h3>
+        <p class="text-neutral-400 text-sm mt-2 mb-7">Javićemo vam se u roku od sat vremena radi potvrde termina.</p>
+        <div class="text-left space-y-2.5 bg-black/40 rounded-xl p-5 border border-white/5">
+          <p class="sum-line"><span class="text-neutral-500 w-20 inline-block">Usluga</span> <b id="mService" class="text-white"></b></p>
+          <p class="sum-line"><span class="text-neutral-500 w-20 inline-block">Termin</span> <b id="mWhen" class="text-white"></b></p>
+          <p class="sum-line"><span class="text-neutral-500 w-20 inline-block">Ime</span> <b id="mName" class="text-white"></b></p>
+          <p class="sum-line"><span class="text-neutral-500 w-20 inline-block">Vozilo</span> <b id="mCar" class="text-white"></b></p>
+          <p class="sum-line"><span class="text-neutral-500 w-20 inline-block">Telefon</span> <b id="mPhone" class="text-white"></b></p>
+        </div>
+        <a id="mWhatsApp" href="#" target="_blank" rel="noopener" class="btn-gold w-full mt-7">Pošalji potvrdu na WhatsApp</a>
+        <button id="bkModalClose" class="btn-ghost w-full mt-3">Zatvori</button>
+      </div>
+    </div>
+
+    <!-- ═══════════ KONTAKT ═══════════ -->
+    <section id="kontakt" class="section relative py-28">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="section-head">
+          <p class="eyebrow">Pronađite nas</p>
+          <h2 class="font-display text-4xl lg:text-6xl text-white">Stupite u <em class="text-gold italic">kontakt</em></h2>
+        </div>
+
+        <div class="mt-16 grid lg:grid-cols-2 gap-6">
+          <div class="space-y-4" data-reveal>
+            <a href="tel:+381665154400" class="contact-row">
+              <span class="contact-ic">☎</span>
+              <span><i>Telefon</i><b>+381 66 515 44 00</b></span>
+            </a>
+            <a href="mailto:Aclajkovac@gmail.com" class="contact-row">
+              <span class="contact-ic">✉</span>
+              <span><i>Email</i><b>Aclajkovac@gmail.com</b></span>
+            </a>
+            <a href="https://maps.app.goo.gl/8voV2PVXbG61UvU79" target="_blank" rel="noopener" class="contact-row">
+              <span class="contact-ic">◎</span>
+              <span><i>Lokacija</i><b>Vojvode Putnika 34, Lajkovac</b></span>
+            </a>
+            <div class="contact-row">
+              <span class="contact-ic">◷</span>
+              <span>
+                <i>Radno vreme</i>
+                <b>Pon – Pet: 08–20h · Sub: 09–18h · Ned: zatvoreno</b>
+              </span>
+            </div>
+            <div class="flex flex-wrap gap-3 pt-3">
+              <a href="https://wa.me/381665154400" class="social-btn" aria-label="WhatsApp">WhatsApp</a>
+              <a href="viber://chat?number=%2B381665154400" class="social-btn" aria-label="Viber">Viber</a>
+              <a href="https://www.instagram.com/ndetailing_studio_lajkovac/" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">Instagram</a>
+              <a href="https://www.tiktok.com/@ndetailing_studio" target="_blank" rel="noopener" class="social-btn" aria-label="TikTok">TikTok</a>
+            </div>
+          </div>
+          <div class="map-frame" data-reveal>
+            <iframe
+              title="LuxAuto Detailing lokacija na mapi"
+              src="https://www.google.com/maps?q=44.3686399,20.1471961&z=16&output=embed"
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="border-t border-white/5 bg-coal">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div>
+        <p class="font-display text-2xl text-white">N <span class="text-gold italic">Detailing</span></p>
+        <p class="text-neutral-500 text-sm mt-4 leading-relaxed">Premium car detailing koji vraća originalnu lepotu vašeg vozila.</p>
+      </div>
+      <div>
+        <p class="foot-head">Stranice</p>
+        <ul class="foot-list">
+          <li><a href="#usluge" class="nav-link">Usluge</a></li>
+          <li><a href="#paketi" class="nav-link">Paketi</a></li>
+          <li><a href="#galerija" class="nav-link">Galerija</a></li>
+          <li><a href="#recenzije" class="nav-link">Recenzije</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="foot-head">Paketi</p>
+        <ul class="foot-list">
+          <li><a href="#paketi" class="nav-link">Basic — 10€</a></li>
+          <li><a href="#paketi" class="nav-link">Premium — 80€</a></li>
+          <li><a href="#paketi" class="nav-link">Gold — 120€</a></li>
+          <li><a href="#paketi" class="nav-link">Diamond — 180€</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="foot-head">Kontakt</p>
+        <ul class="foot-list">
+          <li>Vojvode Putnika 34, Lajkovac</li>
+          <li><a href="tel:+381665154400">+381 66 515 44 00</a></li>
+          <li><a href="mailto:Aclajkovac@gmail.com">Aclajkovac@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/5 py-6 text-center text-xs text-neutral-600">
+      © 2026 N Detailing Studio. Sva prava zadržana.
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button id="toTop" class="fixed bottom-6 right-6 z-40" aria-label="Nazad na vrh">↑</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/dostupnost.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
