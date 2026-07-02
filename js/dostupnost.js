@@ -8,6 +8,11 @@
 
 window.DOSTUPNOST = {
 
+  /* ─── BACKEND (Google Kalendar) ───
+     URL Apps Script web aplikacije — vidi backend/BACKEND-UPUTSTVO.md
+     Dok je prazno (''), sajt radi bez kalendara.                    */
+  backendUrl: '',
+
   /* Broj na koji stižu WhatsApp potvrde (bez + i bez razmaka) */
   brojWhatsApp: '381665154400',
 

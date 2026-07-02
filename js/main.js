@@ -466,12 +466,34 @@ document.addEventListener('site:ready', () => {
     }
   }
 
-  function renderSlots() {
+  // busy slots fetched from the Google Calendar backend, cached per date
+  const busyCache = {};
+  async function fetchBusy(key) {
+    if (!CFG.backendUrl) return [];
+    if (busyCache[key]) return busyCache[key];
+    try {
+      const r = await fetch(`${CFG.backendUrl}?date=${key}`);
+      const d = await r.json();
+      busyCache[key] = d.busy || [];
+    } catch { busyCache[key] = []; }
+    return busyCache[key];
+  }
+
+  async function renderSlots() {
     if (!selDate) return;
+    const key = dateKey(selDate);
     $('#slotDate').textContent = selDate.toLocaleDateString('sr-RS', { weekday: 'long', day: 'numeric', month: 'long' });
+
+    if (CFG.backendUrl && !busyCache[key]) {
+      slotsBox.innerHTML = '<p class="col-span-3 text-neutral-600 text-sm">Proveravam slobodne termine…</p>';
+    }
+    const busy = await fetchBusy(key);
+    if (!selDate || dateKey(selDate) !== key) return; // user picked another date meanwhile
+
     const taken = [
-      ...load().filter(b => b.date === dateKey(selDate)).map(b => b.time),
-      ...((CFG.zauzetiTermini || {})[dateKey(selDate)] || [])
+      ...busy,
+      ...load().filter(b => b.date === key).map(b => b.time),
+      ...((CFG.zauzetiTermini || {})[key] || [])
     ];
     const now = new Date();
     const isToday = +selDate === +today;
@@ -529,7 +551,7 @@ document.addEventListener('site:ready', () => {
   });
 
   // Submit
-  $('#bookingForm').addEventListener('submit', e => {
+  $('#bookingForm').addEventListener('submit', async e => {
     e.preventDefault();
     const name = $('#bkName').value.trim();
     const phone = $('#bkPhone').value.trim();
@@ -555,15 +577,45 @@ document.addEventListener('site:ready', () => {
       note: $('#bkNote').value.trim(),
       created: Date.now()
     };
+    const whenText =
+      `${selDate.toLocaleDateString('sr-RS', { day: 'numeric', month: 'long', year: 'numeric' })} u ${selTime}h`;
+
+    // Backend: write into Google Calendar (it also emails the owner)
+    let backendOk = false;
+    if (CFG.backendUrl) {
+      const submitBtn = e.target.querySelector('[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Rezervišem…';
+      try {
+        const r = await fetch(CFG.backendUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(booking)
+        });
+        const d = await r.json();
+        if (d.ok) {
+          backendOk = true;
+          delete busyCache[booking.date];
+        } else if (d.error === 'zauzeto') {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Potvrdi rezervaciju';
+          $('#sumWhen').textContent = '⚠ Termin je u međuvremenu zauzet — izaberite drugi';
+          delete busyCache[booking.date];
+          selTime = null;
+          renderSlots();
+          return;
+        }
+      } catch { /* backend unreachable — fall back to email below */ }
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Potvrdi rezervaciju';
+    }
+
     const list = load();
     list.push(booking);
     save(list);
 
-    const whenText =
-      `${selDate.toLocaleDateString('sr-RS', { day: 'numeric', month: 'long', year: 'numeric' })} u ${selTime}h`;
-
-    // Email notification to the owner (FormSubmit — free, no backend)
-    if (CFG.emailZaRezervacije) {
+    // Email notification via FormSubmit (only when the backend didn't handle it)
+    if (CFG.emailZaRezervacije && !backendOk) {
       fetch(`https://formsubmit.co/ajax/${CFG.emailZaRezervacije}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
