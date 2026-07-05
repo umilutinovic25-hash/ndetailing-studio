@@ -1,4 +1,4 @@
-/* ═══════════ LuxAuto Detailing — main.js ═══════════ */
+/* ═══════════ N Detailing Studio — main.js ═══════════ */
 'use strict';
 
 const $ = (s, c = document) => c.querySelector(s);

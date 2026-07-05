@@ -1,4 +1,4 @@
-/* ═══════════ LuxAuto Detailing — custom layer over Tailwind ═══════════ */
+/* ═══════════ N Detailing Studio — custom layer over Tailwind ═══════════ */
 
 :root {
   --gold: #c5a96d;
@@ -470,6 +470,16 @@ select.inp option { background: #131315; }
   background: rgba(0,0,0,.4); border: 1px solid rgba(197,169,109,.2);
 }
 .sum-line { font-size: .92rem; color: #ddd; }
+
+.booking-service-panel,
+.booking-calendar-panel,
+.booking-details-panel { grid-column: 1 / -1; }
+
+@media (min-width: 1024px) {
+  .booking-service-panel { grid-column: 1 / span 2; grid-row: 1; }
+  .booking-calendar-panel { grid-column: 3 / span 3; grid-row: 1 / span 2; }
+  .booking-details-panel { grid-column: 1 / span 2; grid-row: 2; }
+}
 
 /* ─── Modal ─── */
 #bkModal.open, #lightbox.open { display: flex; }

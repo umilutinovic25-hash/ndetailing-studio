@@ -9,32 +9,18 @@
   <meta property="og:title" content="N Detailing Studio — Premium Car Detailing">
   <meta property="og:description" content="Vraćamo originalnu lepotu vašeg vozila. Rezervišite termin online.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="images/hero.jpg">
+  <meta property="og:image" content="/images/hero.jpg">
+  <meta property="og:image:alt" content="N Detailing Studio premium auto detailing u Lajkovcu">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="N Detailing Studio — Premium Car Detailing">
+  <meta name="twitter:description" content="Vraćamo originalnu lepotu vašeg vozila. Rezervišite termin online.">
+  <meta name="twitter:image" content="/images/hero.jpg">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink: '#070707',
-            coal: '#0d0d0f',
-            slate2: '#141417',
-            gold: '#c5a96d',
-            goldlight: '#e3cfa4',
-            golddark: '#9a7f45'
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            display: ['"Playfair Display"', 'serif']
-          }
-        }
-      }
-    }
-  </script>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20260705">
+  <link rel="stylesheet" href="css/tailwind.generated.css?v=20260705">
 </head>
 <body class="bg-ink text-neutral-200 font-sans antialiased overflow-x-hidden">
 
@@ -415,7 +401,7 @@
 
         <form id="bookingForm" class="mt-16 grid lg:grid-cols-5 gap-6" novalidate>
           <!-- Step 1: usluga -->
-          <div class="panel lg:col-span-2" data-reveal>
+          <div class="panel booking-service-panel" data-reveal>
             <p class="step-label"><b>1</b> Usluga</p>
             <div class="space-y-3 mt-5" id="servicePicker">
               <label class="svc"><input type="radio" name="bkService" value="Basic (10€)"><span><b>Basic Detailing</b><i>Osnovno osvežavanje</i></span><em>10€</em></label>
@@ -423,28 +409,10 @@
               <label class="svc"><input type="radio" name="bkService" value="Gold (120€)" checked><span><b>Gold Detailing</b><i>Poliranje + hem. sedišta + ozoniranje</i></span><em>120€</em></label>
               <label class="svc"><input type="radio" name="bkService" value="Diamond (180€)"><span><b>Diamond Paket</b><i>Potpuna transformacija</i></span><em>180€</em></label>
             </div>
-
-            <p class="step-label mt-9"><b>3</b> Vaši podaci</p>
-            <div class="space-y-4 mt-5">
-              <input id="bkName" type="text" class="inp" placeholder="Ime i prezime *" required>
-              <input id="bkPhone" type="tel" class="inp" placeholder="Telefon *" required>
-              <input id="bkEmail" type="email" class="inp" placeholder="Email adresa">
-              <div class="grid grid-cols-2 gap-4">
-                <input id="bkCar" type="text" class="inp" placeholder="Marka i model *" required>
-                <select id="bkSegment" class="inp">
-                  <option value="">Segment vozila</option>
-                  <option>A segment (mini)</option>
-                  <option>B segment (kompakt)</option>
-                  <option>C segment (srednja klasa)</option>
-                  <option>D segment (SUV/Van)</option>
-                </select>
-              </div>
-              <textarea id="bkNote" rows="2" class="inp" placeholder="Napomena (opciono)"></textarea>
-            </div>
           </div>
 
           <!-- Step 2: kalendar -->
-          <div class="panel lg:col-span-3" data-reveal>
+          <div class="panel booking-calendar-panel" data-reveal>
             <p class="step-label"><b>2</b> Datum i vreme</p>
             <div class="grid md:grid-cols-2 gap-8 mt-5">
               <div>
@@ -468,8 +436,29 @@
                   <p id="sumService" class="sum-line">Gold Detailing — 120€</p>
                   <p id="sumWhen" class="sum-line text-neutral-500">Datum i vreme nisu izabrani</p>
                 </div>
-                <button type="submit" class="btn-gold w-full mt-6">Potvrdi rezervaciju</button>
               </div>
+            </div>
+          </div>
+
+          <!-- Step 3: podaci -->
+          <div class="panel booking-details-panel" data-reveal>
+            <p class="step-label"><b>3</b> Vaši podaci</p>
+            <div class="space-y-4 mt-5">
+              <input id="bkName" type="text" class="inp" placeholder="Ime i prezime *" required>
+              <input id="bkPhone" type="tel" class="inp" placeholder="Telefon *" required>
+              <input id="bkEmail" type="email" class="inp" placeholder="Email adresa">
+              <div class="grid grid-cols-2 gap-4">
+                <input id="bkCar" type="text" class="inp" placeholder="Marka i model *" required>
+                <select id="bkSegment" class="inp">
+                  <option value="">Segment vozila</option>
+                  <option>A segment (mini)</option>
+                  <option>B segment (kompakt)</option>
+                  <option>C segment (srednja klasa)</option>
+                  <option>D segment (SUV/Van)</option>
+                </select>
+              </div>
+              <textarea id="bkNote" rows="2" class="inp" placeholder="Napomena (opciono)"></textarea>
+              <button type="submit" class="btn-gold w-full">Potvrdi rezervaciju</button>
             </div>
           </div>
         </form>
@@ -533,7 +522,7 @@
           </div>
           <div class="map-frame" data-reveal>
             <iframe
-              title="LuxAuto Detailing lokacija na mapi"
+              title="N Detailing Studio lokacija na mapi"
               src="https://www.google.com/maps?q=44.3686399,20.1471961&z=16&output=embed"
               loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
           </div>
@@ -586,7 +575,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/dostupnost.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/dostupnost.js?v=20260705"></script>
+  <script src="js/main.js?v=20260705"></script>
 </body>
 </html>
