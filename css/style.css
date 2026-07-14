@@ -4,6 +4,21 @@
   --gold: #c5a96d;
   --gold-light: #e3cfa4;
   --gold-dark: #9a7f45;
+
+  /* Motion tokeni — Expo.out iz design systema, jedinstven ritam za ceo sajt */
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --dur-fast: .2s;   /* mikro-interakcije */
+  --dur-base: .35s;  /* hover / state */
+  --dur-slow: .6s;   /* reveal / ulazak */
+
+  /* Tekst na tamnoj pozadini — minimum 4.5:1 kontrasta (WCAG AA) */
+  --text-muted: #a1a1a1;  /* 7.4:1 na #070707 */
+  --text-faint: #8a8a8a;  /* 5.4:1 na #070707 */
+
+  /* Ikone za ::before/::after — SVG maske (Lucide), boje se preko background-color */
+  --ic-check: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+  --ic-arrows: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m18 8 4 4-4 4'/%3E%3Cpath d='M2 12h20'/%3E%3Cpath d='m6 8-4 4 4 4'/%3E%3C/svg%3E");
+  --ic-zoom: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3Cpath d='M11 8v6'/%3E%3Cpath d='M8 11h6'/%3E%3C/svg%3E");
 }
 
 html { scroll-behavior: smooth; }
@@ -191,7 +206,10 @@ body { background: #070707; }
   font-size: .9rem; color: #a8a8a8;
 }
 .price-list li::before {
-  content: '✓'; position: absolute; left: 0; color: var(--gold); font-weight: 700;
+  content: ''; position: absolute; left: 0; top: .2rem;
+  width: 1rem; height: 1rem; background-color: var(--gold);
+  -webkit-mask: var(--ic-check) center / contain no-repeat;
+  mask: var(--ic-check) center / contain no-repeat;
 }
 .addon {
   display: flex; justify-content: space-between; align-items: center; gap: 1rem;
@@ -229,8 +247,11 @@ body { background: #070707; }
   backdrop-filter: blur(4px);
 }
 .ba-handle span::before {
-  content: '⟺'; position: absolute; inset: 0;
-  display: grid; place-items: center; color: var(--gold); font-size: 1.1rem;
+  content: ''; position: absolute; top: 50%; left: 50%;
+  width: 1.15rem; height: 1.15rem; transform: translate(-50%, -50%);
+  background-color: var(--gold);
+  -webkit-mask: var(--ic-arrows) center / contain no-repeat;
+  mask: var(--ic-arrows) center / contain no-repeat;
 }
 .ba-tag {
   position: absolute; top: 14px; z-index: 2;
@@ -267,11 +288,21 @@ body { background: #070707; }
 }
 .g-item:hover img { transform: scale(1.08); filter: brightness(1.08); }
 .g-item::after {
-  content: '+'; position: absolute; inset: 0;
-  display: grid; place-items: center;
-  font-size: 2.4rem; color: var(--gold);
-  background: rgba(0,0,0,.45); opacity: 0; transition: opacity .4s;
+  content: ''; position: absolute; inset: 0;
+  background-color: rgba(0,0,0,.45);
+  opacity: 0; transition: opacity var(--dur-base) var(--ease-out);
 }
+.g-item::before {
+  content: ''; position: absolute; top: 50%; left: 50%; z-index: 1;
+  width: 2.2rem; height: 2.2rem;
+  transform: translate(-50%, -50%) scale(.8);
+  background-color: var(--gold);
+  -webkit-mask: var(--ic-zoom) center / contain no-repeat;
+  mask: var(--ic-zoom) center / contain no-repeat;
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+}
+.g-item:hover::before { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 .g-item:hover::after { opacity: 1; }
 .g-item.hidden { display: none; }
 
@@ -395,13 +426,17 @@ select.inp option { background: #131315; }
 }
 .inp-file::file-selector-button:hover { background: rgba(197,169,109,.18); }
 
-.star-picker { display: flex; gap: .35rem; padding-top: .4rem; }
+.star-picker { display: flex; gap: .25rem; padding-top: .4rem; }
 .star-picker button {
-  font-size: 1.9rem; line-height: 1; color: #333;
-  transition: color .2s, transform .2s;
+  /* 44x44 tap target (WCAG / Apple HIG) uz vizuelnu ikonu od 26px */
+  width: 44px; height: 44px; display: grid; place-items: center;
+  color: #3a3a3a; background: none; border: 0; cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
-.star-picker button:hover { transform: scale(1.15); }
-.star-picker button.lit { color: var(--gold); text-shadow: 0 0 18px rgba(197,169,109,.5); }
+.star-picker button svg { width: 26px; height: 26px; }
+.star-picker button:hover { transform: scale(1.12); }
+.star-picker button.lit { color: var(--gold); }
+.star-picker button.lit svg { fill: var(--gold); filter: drop-shadow(0 0 10px rgba(197,169,109,.45)); }
 
 /* ─── Booking ─── */
 .step-label {
@@ -551,6 +586,39 @@ a.contact-row:hover { border-color: rgba(197,169,109,.4); transform: translateX(
 }
 #toTop.show { opacity: 1; visibility: visible; transform: translateY(0); }
 #toTop:hover { background: rgba(197,169,109,.15); transform: translateY(-3px); }
+
+/* ─── SVG ikonografija (Lucide, stroke 1.5) ─── */
+.service-icon svg { width: 1.6rem; height: 1.6rem; }
+.contact-ic svg { width: 1.35rem; height: 1.35rem; }
+.modal-check svg { width: 2rem; height: 2rem; }
+#toTop svg { width: 1.25rem; height: 1.25rem; }
+.price-tier { display: flex; align-items: center; gap: .5rem; }
+.tier-ic { width: 1rem; height: 1rem; flex: none; }
+.review-stars { display: inline-flex; gap: .15rem; }
+.review-stars svg { width: 1.05rem; height: 1.05rem; fill: currentColor; }
+.review-stars .on, .review-stars .off { display: inline-flex; gap: .15rem; }
+
+/* ─── Fokus: vidljiv zlatni prsten na svemu što se fokusira tastaturom ─── */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: .35rem;
+}
+.inp:focus-visible { outline: none; }  /* .inp već ima svoj focus stil */
+
+/* ─── Skip link ─── */
+.skip-link {
+  position: absolute; left: 1rem; top: -100px; z-index: 200;
+  padding: .75rem 1.25rem; border-radius: .5rem;
+  background: var(--gold); color: #000; font-weight: 600;
+  transition: top var(--dur-base) var(--ease-out);
+}
+.skip-link:focus { top: 1rem; }
+
+/* ─── Kontrast: Tailwind sivi tonovi padaju WCAG AA na crnoj pozadini ─── */
+.text-neutral-500 { color: var(--text-faint) !important; }
+.text-neutral-600 { color: var(--text-faint) !important; }
+.text-neutral-400 { color: var(--text-muted) !important; }
 
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {

@@ -306,9 +306,12 @@ document.addEventListener('site:ready', () => {
   };
   const save = list => localStorage.setItem(LS_KEY, JSON.stringify(list));
 
+  const STAR_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>';
+
   const starHtml = n =>
-    '<span class="review-stars">' +
-    '★'.repeat(n) + '<span class="off">' + '★'.repeat(5 - n) + '</span></span>';
+    `<span class="review-stars" role="img" aria-label="Ocena ${n} od 5">` +
+    `<span class="on">${STAR_SVG.repeat(n)}</span>` +
+    `<span class="off">${STAR_SVG.repeat(5 - n)}</span></span>`;
 
   const esc = s => s.replace(/[&<>"']/g, c =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -384,7 +387,7 @@ document.addEventListener('site:ready', () => {
       e.target.reset();
       rating = 0;
       $$('button', picker).forEach(x => x.classList.remove('lit'));
-      msg.textContent = '✓ Hvala! Vaša recenzija je objavljena.';
+      msg.textContent = 'Hvala! Vaša recenzija je objavljena.';
       msg.classList.remove('hidden');
       track.scrollTo({ left: 0, behavior: 'smooth' });
       setTimeout(() => msg.classList.add('hidden'), 4000);
