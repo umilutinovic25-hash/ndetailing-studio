@@ -170,7 +170,21 @@ body { background: #070707; }
   transform: translateY(-2px);
 }
 
-/* ─── Hero ─── */
+/* ─── Hero ───
+   Cinematic grade preko realne fotografije: prigušujemo bež "salonski"
+   ton, spuštamo ekspoziciju i dodajemo topli zlatni sloj + vinjetu da
+   se slika uklopi u zlatno-crnu premium estetiku sajta. */
+.hero-img { filter: grayscale(.75) brightness(.5) contrast(1.25) sepia(.35); }
+.hero-tint {
+  background:
+    radial-gradient(120% 80% at 72% 25%, rgba(197,169,109,.28), transparent 55%),
+    linear-gradient(210deg, rgba(154,127,69,.22), rgba(7,7,7,.35) 60%);
+  mix-blend-mode: overlay; pointer-events: none;
+}
+.hero-vignette {
+  background: radial-gradient(120% 100% at 50% 42%, transparent 55%, rgba(3,3,4,.72) 100%);
+  pointer-events: none;
+}
 .hero-el { opacity: 0; transform: translateY(40px); }
 .scroll-hint { animation: hint 2.4s ease-in-out infinite; }
 @keyframes hint {
