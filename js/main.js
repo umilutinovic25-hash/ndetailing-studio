@@ -193,20 +193,53 @@ document.addEventListener('site:ready', () => {
     });
   });
 
+  // Scroll-spy: markira sekciju u kojoj se korisnik nalazi na oba nivoa navigacije.
+  // Biramo sekciju koja je najbliža vrhu ispod headera, umesto proste vidljivosti,
+  // da highlight ne skače kod visokih sekcija.
+  // Svaki href postoji dvaput (desktop nav-item + mobilni mobile-link), pa
+  // markiramo po href stringu — inače bi mapiranje href→element pokrilo samo
+  // jedan nivo navigacije.
+  const spyLinks = $$('.nav-item, .mobile-link');
+  const hrefs = new Set(spyLinks.map(a => a.getAttribute('href')));
+  const sections = $$('#hero, section[id]').filter(s => hrefs.has('#' + s.id));
+
+  function updateSpy() {
+    const line = scrollY + 90;               // linija odmah ispod fiksiranog headera
+    let current = sections[0];
+    for (const s of sections) {
+      if (s.offsetTop <= line) current = s; else break;
+    }
+    const activeHash = current ? '#' + current.id : '';
+    spyLinks.forEach(a => {
+      const on = a.getAttribute('href') === activeHash;
+      a.classList.toggle('active', on);
+      if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+  }
+  addEventListener('scroll', updateSpy, { passive: true });
+  addEventListener('resize', updateSpy);     // offsetTop se menja kad se layout prelomi
+  updateSpy();
+
   // Mobile menu
   const burger = $('#burger');
   const menu = $('#mobileMenu');
   function closeMobile() {
     burger.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-label', 'Otvori meni');
     menu.classList.remove('open');
     document.body.style.overflow = '';
   }
   burger.addEventListener('click', () => {
     const open = menu.classList.toggle('open');
     burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Zatvori meni' : 'Otvori meni');
     document.body.style.overflow = open ? 'hidden' : '';
   });
   $('#mobileMenuBg').addEventListener('click', closeMobile);
+  // Esc zatvara meni (escape-routes)
+  addEventListener('keydown', e => { if (e.key === 'Escape') closeMobile(); });
 })();
 
 /* ─────────── 3D TILT ─────────── */
