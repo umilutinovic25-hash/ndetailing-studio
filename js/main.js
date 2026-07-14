@@ -5,6 +5,60 @@ const $ = (s, c = document) => c.querySelector(s);
 const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* ─────────── VALIDACIJA ───────────
+   Poruka mora da kaže i uzrok i kako se ispravlja, stoji uz samo polje
+   i ide kroz role="alert" da je čitač ekrana pročita. */
+const Validate = (() => {
+  const setErr = (input, poruka) => {
+    const box = input.closest('.field');
+    const err = box && $('.field-err', box);
+    input.classList.toggle('err', !!poruka);
+    input.setAttribute('aria-invalid', poruka ? 'true' : 'false');
+    if (err) {
+      err.textContent = poruka || '';
+      err.classList.toggle('show', !!poruka);
+    }
+    return !poruka;
+  };
+
+  const proveri = (input, pravilo) => setErr(input, pravilo(input.value.trim()));
+
+  /* Validacija na blur, ne na svaki taster — greška se javlja tek kad
+     korisnik završi sa poljem. Kad je polje već u grešci, čistimo je čim
+     unos postane ispravan, da poruka ne visi dok kuca. */
+  const veži = (input, pravilo) => {
+    input.addEventListener('blur', () => proveri(input, pravilo));
+    input.addEventListener('input', () => {
+      if (input.classList.contains('err') && !pravilo(input.value.trim())) setErr(input, '');
+    });
+  };
+
+  /* Vraća true ako je sve u redu; inače fokusira prvo neispravno polje. */
+  const proveriSve = parovi => {
+    const loši = parovi.filter(([input, pravilo]) => !proveri(input, pravilo));
+    if (loši.length) {
+      loši[0][0].focus();
+      loši[0][0].scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    }
+    return loši.length === 0;
+  };
+
+  return { setErr, veži, proveriSve };
+})();
+
+/* Pravila — svako vraća poruku o grešci ili '' ako je vrednost ispravna. */
+const Pravila = {
+  ime: v => !v ? 'Unesite ime i prezime.'
+           : v.length < 3 ? 'Ime mora imati bar 3 karaktera.' : '',
+  telefon: v => !v ? 'Unesite broj telefona da možemo da potvrdimo termin.'
+              : !/^[+\d][\d\s\-/()]{7,}$/.test(v) ? 'Broj nije ispravan — npr. +381 66 515 44 00.' : '',
+  email: v => !v ? '' /* opciono polje */
+            : !/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(v) ? 'Email nije ispravan — npr. marko@primer.com.' : '',
+  auto: v => !v ? 'Unesite marku i model vozila.' : '',
+  komentar: v => !v ? 'Napišite par reči o svom iskustvu.'
+               : v.length < 10 ? 'Komentar je prekratak — bar 10 karaktera.' : ''
+};
+
 /* ─────────── PRELOADER ─────────── */
 (() => {
   const pre = $('#preloader');
@@ -360,23 +414,34 @@ document.addEventListener('site:ready', () => {
     b.addEventListener('click', () => {
       rating = +b.dataset.star;
       $$('button', picker).forEach(x => x.classList.toggle('lit', +x.dataset.star <= rating));
+      $('#revStarErr').classList.remove('show');
     });
   });
 
   // Submit
+  Validate.veži($('#revName'), Pravila.ime);
+  Validate.veži($('#revText'), Pravila.komentar);
+
   $('#reviewForm').addEventListener('submit', e => {
     e.preventDefault();
-    const name = $('#revName').value.trim();
-    const text = $('#revText').value.trim();
     const msg = $('#reviewMsg');
+    msg.classList.add('hidden');
 
-    $('#revName').classList.toggle('err', !name);
-    $('#revText').classList.toggle('err', !text);
-    if (!name || !text || !rating) {
-      msg.textContent = !rating ? 'Molimo izaberite ocenu zvezdicama.' : 'Molimo popunite obavezna polja.';
-      msg.classList.remove('hidden');
+    const poljaOk = Validate.proveriSve([
+      [$('#revName'), Pravila.ime],
+      [$('#revText'), Pravila.komentar]
+    ]);
+
+    const zvezdiceErr = $('#revStarErr');
+    zvezdiceErr.textContent = rating ? '' : 'Izaberite ocenu — kliknite na zvezdice.';
+    zvezdiceErr.classList.toggle('show', !rating);
+    if (!poljaOk || !rating) {
+      if (poljaOk && !rating) picker.querySelector('button').focus();
       return;
     }
+
+    const name = $('#revName').value.trim();
+    const text = $('#revText').value.trim();
 
     const file = $('#revPhoto').files[0];
     const finalize = photo => {
@@ -528,7 +593,7 @@ document.addEventListener('site:ready', () => {
     const w = $('#sumWhen');
     if (selDate && selTime) {
       w.textContent = `${selDate.toLocaleDateString('sr-RS', { day: 'numeric', month: 'long', year: 'numeric' })} u ${selTime}h`;
-      w.classList.remove('text-neutral-500');
+      w.classList.remove('text-neutral-500', 'sum-err');
     } else {
       w.textContent = 'Datum i vreme nisu izabrani';
       w.classList.add('text-neutral-500');
@@ -554,22 +619,35 @@ document.addEventListener('site:ready', () => {
   });
 
   // Submit
+  Validate.veži($('#bkName'), Pravila.ime);
+  Validate.veži($('#bkPhone'), Pravila.telefon);
+  Validate.veži($('#bkEmail'), Pravila.email);
+  Validate.veži($('#bkCar'), Pravila.auto);
+
   $('#bookingForm').addEventListener('submit', async e => {
     e.preventDefault();
+
+    /* Termin se bira iznad polja, pa se proverava prvi — inače bismo
+       korisnika poslali dole u formu zbog greške koja je gore. */
+    if (!selDate || !selTime) {
+      const when = $('#sumWhen');
+      when.textContent = 'Izaberite datum i vreme termina iznad.';
+      when.classList.add('sum-err');
+      $('#rezervacija').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+      return;
+    }
+    $('#sumWhen').classList.remove('sum-err');
+
+    if (!Validate.proveriSve([
+      [$('#bkName'), Pravila.ime],
+      [$('#bkPhone'), Pravila.telefon],
+      [$('#bkEmail'), Pravila.email],
+      [$('#bkCar'), Pravila.auto]
+    ])) return;
+
     const name = $('#bkName').value.trim();
     const phone = $('#bkPhone').value.trim();
     const car = $('#bkCar').value.trim();
-
-    $('#bkName').classList.toggle('err', !name);
-    $('#bkPhone').classList.toggle('err', !phone);
-    $('#bkCar').classList.toggle('err', !car);
-
-    if (!name || !phone || !car) return;
-    if (!selDate || !selTime) {
-      $('#sumWhen').textContent = '⚠ Izaberite datum i vreme termina';
-      $('#rezervacija').scrollIntoView({ behavior: 'smooth' });
-      return;
-    }
 
     const booking = {
       service: chosenService(),
@@ -602,7 +680,9 @@ document.addEventListener('site:ready', () => {
         } else if (d.error === 'zauzeto') {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Potvrdi rezervaciju';
-          $('#sumWhen').textContent = '⚠ Termin je u međuvremenu zauzet — izaberite drugi';
+          const when = $('#sumWhen');
+          when.textContent = 'Termin je u međuvremenu zauzet — izaberite drugi.';
+          when.classList.add('sum-err');
           delete busyCache[booking.date];
           selTime = null;
           renderSlots();

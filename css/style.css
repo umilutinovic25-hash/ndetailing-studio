@@ -19,6 +19,7 @@
   --ic-check: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
   --ic-arrows: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m18 8 4 4-4 4'/%3E%3Cpath d='M2 12h20'/%3E%3Cpath d='m6 8-4 4 4 4'/%3E%3C/svg%3E");
   --ic-zoom: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3Cpath d='M11 8v6'/%3E%3Cpath d='M8 11h6'/%3E%3C/svg%3E");
+  --ic-warn: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 8v4'/%3E%3Cpath d='M12 16h.01'/%3E%3C/svg%3E");
 }
 
 html { scroll-behavior: smooth; }
@@ -348,8 +349,11 @@ body { background: #070707; }
 .review-track {
   display: grid; grid-auto-flow: column;
   grid-auto-columns: min(100%, 380px);
-  gap: 1.4rem; overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  gap: 1.4rem; overflow-x: auto; overflow-y: hidden;
+  /* proximity, ne mandatory: mandatory hvata vertikalni wheel nad karuselom
+     i zaključava skrol cele stranice */
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
   scrollbar-width: none; padding: .5rem .2rem 1rem;
 }
 .review-track::-webkit-scrollbar { display: none; }
@@ -597,6 +601,22 @@ a.contact-row:hover { border-color: rgba(197,169,109,.4); transform: translateX(
 .review-stars { display: inline-flex; gap: .15rem; }
 .review-stars svg { width: 1.05rem; height: 1.05rem; fill: currentColor; }
 .review-stars .on, .review-stars .off { display: inline-flex; gap: .15rem; }
+
+/* ─── Greške u formama ─── */
+.field { display: flex; flex-direction: column; }
+.field-err {
+  display: none;
+  margin-top: .4rem; padding-left: .1rem;
+  font-size: .8rem; line-height: 1.4; color: #f08b88;  /* 5.9:1 na tamnoj kartici */
+}
+.field-err.show { display: flex; align-items: center; gap: .35rem; }
+.field-err.show::before {
+  content: ''; flex: none; width: .85rem; height: .85rem;
+  background-color: currentColor;
+  -webkit-mask: var(--ic-warn) center / contain no-repeat;
+  mask: var(--ic-warn) center / contain no-repeat;
+}
+.sum-err { color: #f08b88 !important; }
 
 /* ─── Fokus: vidljiv zlatni prsten na svemu što se fokusira tastaturom ─── */
 :focus-visible {

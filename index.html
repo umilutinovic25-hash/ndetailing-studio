@@ -19,8 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20260714">
-  <link rel="stylesheet" href="css/tailwind.generated.css?v=20260714">
+  <link rel="stylesheet" href="css/style.css?v=20260714b">
+  <link rel="stylesheet" href="css/tailwind.generated.css?v=20260714b">
 </head>
 <body class="bg-ink text-neutral-200 font-sans antialiased overflow-x-hidden">
 
@@ -376,31 +376,36 @@
             <p class="text-neutral-500 text-sm mb-8">Vaše mišljenje nam znači — podelite iskustvo sa drugima.</p>
             <form id="reviewForm" class="space-y-5" novalidate>
               <div class="grid sm:grid-cols-2 gap-5">
-                <div>
+                <div class="field">
                   <label class="lbl" for="revName">Ime i prezime *</label>
-                  <input id="revName" type="text" class="inp" required placeholder="Marko Marković">
+                  <input id="revName" type="text" class="inp" required placeholder="Marko Marković"
+                         autocomplete="name" aria-describedby="revNameErr">
+                  <p class="field-err" id="revNameErr" role="alert"></p>
                 </div>
                 <div>
                   <label class="lbl">Ocena *</label>
-                  <div id="starPicker" class="star-picker" role="radiogroup" aria-label="Ocena od 1 do 5">
+                  <div id="starPicker" class="star-picker" role="radiogroup" aria-label="Ocena od 1 do 5" aria-describedby="revStarErr">
                     <button type="button" data-star="1" aria-label="1 zvezdica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg></button>
                     <button type="button" data-star="2" aria-label="2 zvezdice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg></button>
                     <button type="button" data-star="3" aria-label="3 zvezdice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg></button>
                     <button type="button" data-star="4" aria-label="4 zvezdice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg></button>
                     <button type="button" data-star="5" aria-label="5 zvezdica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg></button>
                   </div>
+                  <p class="field-err" id="revStarErr" role="alert"></p>
                 </div>
               </div>
-              <div>
+              <div class="field">
                 <label class="lbl" for="revText">Komentar *</label>
-                <textarea id="revText" rows="4" class="inp" required placeholder="Kako je prošlo vaše iskustvo sa N Detailing timom?"></textarea>
+                <textarea id="revText" rows="4" class="inp" required placeholder="Kako je prošlo vaše iskustvo sa N Detailing timom?"
+                          aria-describedby="revTextErr"></textarea>
+                <p class="field-err" id="revTextErr" role="alert"></p>
               </div>
               <div>
                 <label class="lbl" for="revPhoto">Fotografija (opciono)</label>
                 <input id="revPhoto" type="file" accept="image/*" class="inp inp-file">
               </div>
               <button type="submit" class="btn-gold w-full">Objavi recenziju</button>
-              <p id="reviewMsg" class="hidden text-center text-sm text-gold"></p>
+              <p id="reviewMsg" class="hidden text-center text-sm text-gold" role="status" aria-live="polite"></p>
             </form>
           </div>
         </div>
@@ -461,20 +466,46 @@
           <div class="panel booking-details-panel" data-reveal>
             <p class="step-label"><b>3</b> Vaši podaci</p>
             <div class="space-y-4 mt-5">
-              <input id="bkName" type="text" class="inp" placeholder="Ime i prezime *" required>
-              <input id="bkPhone" type="tel" class="inp" placeholder="Telefon *" required>
-              <input id="bkEmail" type="email" class="inp" placeholder="Email adresa">
-              <div class="grid grid-cols-2 gap-4">
-                <input id="bkCar" type="text" class="inp" placeholder="Marka i model *" required>
-                <select id="bkSegment" class="inp">
-                  <option value="">Segment vozila</option>
-                  <option>A segment (mini)</option>
-                  <option>B segment (kompakt)</option>
-                  <option>C segment (srednja klasa)</option>
-                  <option>D segment (SUV/Van)</option>
-                </select>
+              <div class="field">
+                <label class="lbl" for="bkName">Ime i prezime *</label>
+                <input id="bkName" type="text" class="inp" placeholder="Marko Marković"
+                       required autocomplete="name" aria-describedby="bkNameErr">
+                <p class="field-err" id="bkNameErr" role="alert"></p>
               </div>
-              <textarea id="bkNote" rows="2" class="inp" placeholder="Napomena (opciono)"></textarea>
+              <div class="field">
+                <label class="lbl" for="bkPhone">Telefon *</label>
+                <input id="bkPhone" type="tel" class="inp" placeholder="+381 6x xxx xx xx"
+                       required autocomplete="tel" inputmode="tel" aria-describedby="bkPhoneErr">
+                <p class="field-err" id="bkPhoneErr" role="alert"></p>
+              </div>
+              <div class="field">
+                <label class="lbl" for="bkEmail">Email adresa</label>
+                <input id="bkEmail" type="email" class="inp" placeholder="marko@primer.com"
+                       autocomplete="email" inputmode="email" aria-describedby="bkEmailErr">
+                <p class="field-err" id="bkEmailErr" role="alert"></p>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="field">
+                  <label class="lbl" for="bkCar">Marka i model *</label>
+                  <input id="bkCar" type="text" class="inp" placeholder="BMW 320d"
+                         required aria-describedby="bkCarErr">
+                  <p class="field-err" id="bkCarErr" role="alert"></p>
+                </div>
+                <div class="field">
+                  <label class="lbl" for="bkSegment">Segment vozila</label>
+                  <select id="bkSegment" class="inp">
+                    <option value="">Izaberite segment</option>
+                    <option>A segment (mini)</option>
+                    <option>B segment (kompakt)</option>
+                    <option>C segment (srednja klasa)</option>
+                    <option>D segment (SUV/Van)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field">
+                <label class="lbl" for="bkNote">Napomena (opciono)</label>
+                <textarea id="bkNote" rows="2" class="inp" placeholder="Nešto što treba da znamo unapred?"></textarea>
+              </div>
               <button type="submit" class="btn-gold w-full">Potvrdi rezervaciju</button>
             </div>
           </div>
@@ -604,7 +635,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/dostupnost.js?v=20260714"></script>
-  <script src="js/main.js?v=20260714"></script>
+  <script src="js/dostupnost.js?v=20260714b"></script>
+  <script src="js/main.js?v=20260714b"></script>
 </body>
 </html>
