@@ -174,7 +174,7 @@ body { background: #070707; }
    Cinematic grade preko realne fotografije: prigušujemo bež "salonski"
    ton, spuštamo ekspoziciju i dodajemo topli zlatni sloj + vinjetu da
    se slika uklopi u zlatno-crnu premium estetiku sajta. */
-.hero-img { filter: grayscale(.75) brightness(.5) contrast(1.25) sepia(.35); }
+.hero-img { filter: brightness(.62) contrast(1.08) saturate(.9); }
 .hero-tint {
   background:
     radial-gradient(120% 80% at 72% 25%, rgba(197,169,109,.28), transparent 55%),
@@ -188,7 +188,7 @@ body { background: #070707; }
 /* Na uskom ekranu vidi se manji, tamniji isečak slike — posvetljavamo je i
    olabavimo vinjetu da tekstura vozila ostane vidljiva iza teksta. */
 @media (max-width: 640px) {
-  .hero-img { filter: grayscale(.7) brightness(.66) contrast(1.14) sepia(.3); }
+  .hero-img { filter: brightness(.6) contrast(1.08) saturate(.9); object-position: 65% center; }
   .hero-vignette { background: radial-gradient(135% 100% at 50% 40%, transparent 62%, rgba(3,3,4,.55) 100%); }
 }
 .hero-el { opacity: 0; transform: translateY(40px); }
