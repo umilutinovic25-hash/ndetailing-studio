@@ -185,6 +185,12 @@ body { background: #070707; }
   background: radial-gradient(120% 100% at 50% 42%, transparent 55%, rgba(3,3,4,.72) 100%);
   pointer-events: none;
 }
+/* Na uskom ekranu vidi se manji, tamniji isečak slike — posvetljavamo je i
+   olabavimo vinjetu da tekstura vozila ostane vidljiva iza teksta. */
+@media (max-width: 640px) {
+  .hero-img { filter: grayscale(.7) brightness(.66) contrast(1.14) sepia(.3); }
+  .hero-vignette { background: radial-gradient(135% 100% at 50% 40%, transparent 62%, rgba(3,3,4,.55) 100%); }
+}
 .hero-el { opacity: 0; transform: translateY(40px); }
 .scroll-hint { animation: hint 2.4s ease-in-out infinite; }
 @keyframes hint {
